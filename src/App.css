@@ -8,3 +8,11 @@ html, body {
   width: 100wh; 
   height: 100vh;
 }
+
+.forecast-container {
+  height: 30%;
+}
+
+.locations-map-container {
+  height: 70%;
+}

@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import LocationsMap from './components/LocationsMap';
+import Forecast from './components/Forecast';
 
 export interface Location {
   name: string,
@@ -19,7 +20,12 @@ function App() {
 
   return (
     <div>
-      <LocationsMap locations={locations}/>
+      <div className="forecast-container">
+        <Forecast />
+      </div>
+      <div className="locations-map-container">
+        <LocationsMap locations={locations}/>
+      </div>
     </div>
   );
 }
