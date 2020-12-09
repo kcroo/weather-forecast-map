@@ -11,7 +11,7 @@ function kelvinToFahrenheit(temp: number): number {
 
 function unixTimeToMonthDate(unixTime: string): string {
   const date = new Date(parseInt(unixTime) * 1000);
-  return `${date.getMonth()}/${date.getDate()}`;
+  return `${date.getMonth()+1}/${date.getDate()}`;
 }
 
 function DayForecast({dayForecast}: Props) {
