@@ -28,6 +28,7 @@ function DayForecast({dayForecast}: Props) {
           </div>
         );
       })}
+      <img src={`http://openweathermap.org/img/wn/${dayForecast.weather[0].icon}.png`} alt={`${dayForecast.weather[0].main}`}></img>
     </div>
   )
 }
