@@ -17,14 +17,18 @@ function App() {
     {name: 'Walla Walla', latitude: 46.07123, longitude: -118.29352},
     {name: 'Tollgate', latitude: 45.781037, longitude: -118.09154}
   ]);
+  const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
+  function handleCurrentLocationChange(newLocation: Location) {
+    setCurrentLocation(newLocation);
+  }
 
   return (
     <div>
       <div className="forecast-container">
-        <Forecast />
+        <Forecast currentLocation={currentLocation}/>
       </div>
       <div className="locations-map-container">
-        <LocationsMap locations={locations}/>
+        <LocationsMap locations={locations} currentLocation={currentLocation} onCurrentLocationChange={handleCurrentLocationChange}/>
       </div>
     </div>
   );

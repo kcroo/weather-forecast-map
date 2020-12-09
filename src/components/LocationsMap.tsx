@@ -14,10 +14,12 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 type Props = {
-  locations: Location[]
+  locations: Location[],
+  currentLocation: Location | null,
+  onCurrentLocationChange: Function
 }
 
-function LocationsMap({locations}: Props) {
+function LocationsMap({locations, currentLocation, onCurrentLocationChange}: Props) {
   // set bounds of the map, based off of locations above
   // make this state later if locations array can change & make useEffect to update it when locations change
   const bounds = latLngBounds([locations[0].latitude, locations[0].longitude], [locations[0].latitude, locations[0].longitude]);
@@ -35,7 +37,13 @@ function LocationsMap({locations}: Props) {
       />
       {locations.map(loc => { 
         return (
-          <Marker key={loc.name} position={L.latLng(loc.latitude, loc.longitude)}>
+          <Marker 
+            key={loc.name}
+            position={L.latLng(loc.latitude, loc.longitude)}
+            eventHandlers={{
+              click: (e) => {onCurrentLocationChange(loc);}
+            }}
+          >
             <Popup>{loc.name}</Popup>
           </Marker>
         );
