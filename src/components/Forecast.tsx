@@ -8,31 +8,20 @@ type Props = {
 }
 
 interface OpenWeatherForecast {
-  dt_txt: string,
-  main: {
-    temp_max: number,
-    temp_min: number,
-    humidity: number
+  dt: string,
+  temp: {
+    max: number,
+    min: number
   },
-  wind: {
-    speed: number
-  }
+  humidity: number,
+  wind_speed: number
 }
 
 interface OpenWeatherResponse {
-  city: {
-    name: string,
-    coord: {
-      lat: number,
-      long: number
-    }
-  },
-  cnt: number,
-  cod: string,
-  list: OpenWeatherForecast[] 
+  daily: OpenWeatherForecast[] 
 }
 
-interface SingleDayForecast {
+export interface SingleDayForecast {
   date: string,
   highTemp: number,
   lowTemp: number,
@@ -41,7 +30,6 @@ interface SingleDayForecast {
 }
 
 interface SevenDayForecast {
-  location: Location,
   allForecasts: SingleDayForecast[]
 }
 
@@ -57,26 +45,19 @@ function Forecast({currentLocation}: Props) {
     async function getForecast() {
       if (currentLocation) {
         try {
-          //const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&cnt=7&appid=8a06a086509594b99c75611b81014364`);
-          //const json = await response.json();
-          const data = await fetchWrapper<OpenWeatherResponse>(`https://api.openweathermap.org/data/2.5/forecast?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&cnt=7&appid=${process.env.REACT_APP_OWM_API_KEY}`)
+          const data = await fetchWrapper<OpenWeatherResponse>(`https://api.openweathermap.org/data/2.5/onecall?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&exclude=current,minutely,hourly&appid=${process.env.REACT_APP_OWM_API_KEY}`)
           console.log(data);
           try {
-            const forecasts: SingleDayForecast[] = data.list.map(day => {
+            const forecasts: SingleDayForecast[] = data.daily.map(day => {
               return {
-                date: day.dt_txt,
-                highTemp: day.main.temp_max,
-                lowTemp: day.main.temp_min,
-                humidity: day.main.humidity,
-                windSpeed: day.wind.speed
+                date: day.dt,
+                highTemp: day.temp.max,
+                lowTemp: day.temp.min,
+                humidity: day.humidity,
+                windSpeed: day.wind_speed
               }
             })
             const sevenDayForecast = {
-              location: {
-                name: data.city.name,
-                latitude: data.city.coord.lat,
-                longitude: data.city.coord.long
-              },
               allForecasts: forecasts
             }
             setForecastData(sevenDayForecast);
@@ -98,13 +79,9 @@ function Forecast({currentLocation}: Props) {
       <div>
         <h1>{currentLocation.name}, {currentLocation.latitude}, {currentLocation.longitude}</h1>
         <div className="forecast-box">
-            <DayForecast />
-            <DayForecast />
-            <DayForecast />
-            <DayForecast />
-            <DayForecast />
-            <DayForecast />
-            <DayForecast />
+          {forecastData.allForecasts.map(day => {
+            return <DayForecast dayForecast={day} key={day.date}/>
+          })}
         </div>
       </div>
     )
