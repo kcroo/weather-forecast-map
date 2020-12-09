@@ -20,6 +20,14 @@ function DayForecast({dayForecast}: Props) {
       <h3>{unixTimeToMonthDate(dayForecast.date)}</h3>
       <p>{kelvinToFahrenheit(dayForecast.highTemp)}</p>
       <p>{kelvinToFahrenheit(dayForecast.lowTemp)}</p>
+      {dayForecast.weather.map(data => {
+        return (
+          <div>
+            <p>{data.main}</p>
+            <p>{data.description}</p>
+          </div>
+        );
+      })}
     </div>
   )
 }

@@ -7,6 +7,12 @@ type Props = {
   currentLocation: Location | null
 }
 
+interface Weather {
+  main: string,
+  description: string,
+  icon: string
+}
+
 interface OpenWeatherForecast {
   dt: string,
   temp: {
@@ -14,7 +20,8 @@ interface OpenWeatherForecast {
     min: number
   },
   humidity: number,
-  wind_speed: number
+  wind_speed: number, 
+  weather: Weather[]
 }
 
 interface OpenWeatherResponse {
@@ -26,7 +33,8 @@ export interface SingleDayForecast {
   highTemp: number,
   lowTemp: number,
   humidity: number,
-  windSpeed: number
+  windSpeed: number,
+  weather: Weather[]
 }
 
 interface SevenDayForecast {
@@ -54,7 +62,8 @@ function Forecast({currentLocation}: Props) {
                 highTemp: day.temp.max,
                 lowTemp: day.temp.min,
                 humidity: day.humidity,
-                windSpeed: day.wind_speed
+                windSpeed: day.wind_speed,
+                weather: day.weather
               }
             })
             const sevenDayForecast = {
