@@ -15,7 +15,9 @@ export interface Location {
 function App() {
   const [locations, setLocations] = useState<Location[]>([
     {name: 'Walla Walla', latitude: 46.07123, longitude: -118.29352},
-    {name: 'Tollgate', latitude: 45.781037, longitude: -118.09154}
+    {name: 'Tollgate', latitude: 45.781037, longitude: -118.09154},
+    {name: 'Florence', latitude: 43.982523, longitude: -124.099798},
+    {name: 'Long Beach', latitude: 46.351170, longitude: -124.046285}
   ]);
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   function handleCurrentLocationChange(newLocation: Location) {
