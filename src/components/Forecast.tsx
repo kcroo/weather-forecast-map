@@ -53,7 +53,7 @@ function Forecast({currentLocation}: Props) {
     async function getForecast() {
       if (currentLocation) {
         try {
-          const data = await fetchWrapper<OpenWeatherResponse>(`https://api.openweathermap.org/data/2.5/onecall?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&exclude=current,minutely,hourly&appid=${process.env.REACT_APP_OWM_API_KEY}`)
+          const data = await fetchWrapper<OpenWeatherResponse>(`https://api.openweathermap.org/data/2.5/onecall?lat=${currentLocation.latitude}&lon=${currentLocation.longitude}&exclude=current,minutely,hourly&appid=${process.env.REACT_APP_OWM_API_KEY}&units=imperial`)
           console.log(data);
           try {
             const forecasts: SingleDayForecast[] = data.daily.map(day => {
