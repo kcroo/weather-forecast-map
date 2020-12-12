@@ -21,7 +21,10 @@ interface OpenWeatherForecast {
   },
   humidity: number,
   wind_speed: number, 
-  weather: Weather[]
+  weather: Weather[],
+  pop: number,
+  rain: number,
+  snow: number
 }
 
 interface OpenWeatherResponse {
@@ -34,7 +37,12 @@ export interface SingleDayForecast {
   lowTemp: number,
   humidity: number,
   windSpeed: number,
-  weather: Weather[]
+  weather: Weather[],
+  precipitation : {
+    probability: number,
+    rainAmount: number,
+    snowAmount: number
+  }
 }
 
 interface SevenDayForecast {
@@ -63,7 +71,12 @@ function Forecast({currentLocation}: Props) {
                 lowTemp: day.temp.min,
                 humidity: day.humidity,
                 windSpeed: day.wind_speed,
-                weather: day.weather
+                weather: day.weather,
+                precipitation: {
+                  probability: day.pop ? day.pop : 0,
+                  rainAmount: day.rain ? day.rain : 0,
+                  snowAmount: day.snow ? day.snow : 0
+                }
               }
             })
             const sevenDayForecast = {
